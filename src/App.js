@@ -10,7 +10,7 @@ const App = () => {
     <div className="App">
       <div className="container">
         <div className="header-container">
-          <p className="header">🕹️ Gamer Space</p>
+          <p className="header">🕹️ Gamerverse</p>
           <p className="sub-text">
             View all the gamers favorites in the metaverse 🎮
           </p>
