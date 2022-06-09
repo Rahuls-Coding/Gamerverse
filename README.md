@@ -7,3 +7,4 @@ To run this project locally enter these commands in your terminal:
 2. Run `npm run start` to start the project
 3. Start coding!
 ```
+🕹️ 🎮

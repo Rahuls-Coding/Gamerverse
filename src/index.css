@@ -1,4 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 body {
   margin: 0;
@@ -7,7 +9,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; */
-  font-family: 'Press Start 2P', cursive;
+  background-color: #1a202c;
 }
 
 code {
@@ -15,4 +17,8 @@ code {
     monospace;
 }
 
-  
+img.animated-gif{
+  width: 120px;
+  height: 200px;
+}
+
