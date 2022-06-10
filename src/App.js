@@ -9,19 +9,18 @@ const TWITTER_LINK = `https://twitter.com/${TWITTER_HANDLE}`;
 
 const App = () => {
 
-  const SAMPLE_GIFS = [
+  const TEST_GIFS = [
     'https://i.giphy.com/media/eIG0HfouRQJQr1wBzz/giphy.webp',
-	'https://media3.giphy.com/media/L71a8LW2UrKwPaWNYM/giphy.gif?cid=ecf05e47rr9qizx2msjucl1xyvuu47d7kf25tqt2lvo024uo&rid=giphy.gif&ct=g',
-	'https://media4.giphy.com/media/AeFmQjHMtEySooOc8K/giphy.gif?cid=ecf05e47qdzhdma2y3ugn32lkgi972z9mpfzocjj6z1ro4ec&rid=giphy.gif&ct=g',
-	'https://i.giphy.com/media/PAqjdPkJLDsmBRSYUp/giphy.webp',
-    
-    // "https://media.giphy.com/media/xtVkIJzqk4pGJciS1p/giphy.gif",
-    // "https://media.giphy.com/media/1APhATvqD65r966yCP/giphy.gif",
-    // "https://media.giphy.com/media/m3N5PpxSyYyFICeSvb/giphy.gif",
-    // "https://media.giphy.com/media/ov3RQZYiO8Bjy3suFz/giphy.gif"
+    'https://media3.giphy.com/media/L71a8LW2UrKwPaWNYM/giphy.gif?cid=ecf05e47rr9qizx2msjucl1xyvuu47d7kf25tqt2lvo024uo&rid=giphy.gif&ct=g',
+    'https://media4.giphy.com/media/AeFmQjHMtEySooOc8K/giphy.gif?cid=ecf05e47qdzhdma2y3ugn32lkgi972z9mpfzocjj6z1ro4ec&rid=giphy.gif&ct=g',
+    'https://i.giphy.com/media/PAqjdPkJLDsmBRSYUp/giphy.webp',
+  
   ]
 
   const [walletAddress, setWalletAddress] = useState(null);
+  const [inputValue, setInputValue] = useState('');
+  const [gifList, setGifList] = useState([]);
+
 
   const checkIfWalletIsConnected = async () => {
     try {
@@ -57,6 +56,45 @@ const App = () => {
     }
   };
 
+  const sendGif = async () => {
+    if (inputValue.length > 0) {
+      console.log('Gif link:', inputValue);
+      setGifList([...gifList, inputValue])
+      setInputValue("")
+    } else {
+      console.log('Empty input. Try again.');
+    }
+  };
+
+  const onInputChange = (event) => {
+    const value = event.target.value
+    setInputValue(value)
+
+  }
+
+  const renderConnectedContainer = () => (
+    <div className="connected-container">
+    {/* Go ahead and add this input and button to start */}
+    <form
+      onSubmit={(event) => {
+        event.preventDefault();
+        sendGif();
+      }}
+    >
+      <input type="text" placeholder="Enter gif link!" value={inputValue} onChange={onInputChange} />
+      <button type="submit" className="cta-button submit-gif-button">Submit</button>
+    </form>
+    <div className="connected-container">
+      <div className="gif-grid">
+        {gifList.map(gif => (
+          <div className="gif-item" key={gif}>
+            <img src={gif} alt={gif} />
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+  );
 
   const renderNotConnectedContainer = () => {
     return(
@@ -65,18 +103,6 @@ const App = () => {
     onClick={connectWallet}>Connect Wallet</button>
     )
   }
-
-  const renderConnectedContainer = () => (
-    <div className="connected-container">
-      <div className="gif-grid">
-        {SAMPLE_GIFS.map(gif => (
-          <div className="gif-item" key={gif}>
-            <img src={gif} alt={gif} className="animated-gif"/>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
 
   useEffect(() => {
     const onLoad = async () => {
@@ -88,10 +114,17 @@ const App = () => {
     }
   }, []);
 
+  useEffect(() => {
+    if (walletAddress) {
+      console.log('Fetching GIF list...');
+      setGifList(TEST_GIFS);
+    }
+  }, [walletAddress]);
+
 
   return (
     <div className="App">
-      <div className={walletAddress ? 'authed-container' : 'container'}>
+      <div className='authed-container'>
         <div className="header-container">
           <p className=" glitch header"><span aria-hidden="true">Gamerverse</span> <span aria-hidden="true">Gamerverse</span> Gamerverse</p>
           <p className="sub-text">
