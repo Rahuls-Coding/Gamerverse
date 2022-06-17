@@ -66,19 +66,17 @@ const App = () => {
         }
       }
     catch (error) {
-      console.log(error);
+      console.log("Wallet not connectd");
     }
   };
 
   const connectWallet = async () => {
-    const { solana } = window
+    const { solana } = window;
+  
     if (solana) {
-      const response = await solana.connect({onlyIfTrusted: true})
-      console.log(
-        "Public Key Address:",
-        response.publicKey.toString(),
-      )
-      setWalletAddress(response.publicKey.toString())
+      const response = await solana.connect();
+      console.log('Connected with Public Key:', response.publicKey.toString());
+      setWalletAddress(response.publicKey.toString());
     }
   };
 
